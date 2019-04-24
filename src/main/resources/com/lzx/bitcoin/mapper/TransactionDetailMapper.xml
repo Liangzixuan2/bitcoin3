@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzx.bitcoin.mapper.TransactionDetailMapper">
+  <resultMap id="BaseResultMap" type="com.lzx.bitcoin.bean.TransactionDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="txid" jdbcType="CHAR" property="txid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.lzx.bitcoin.bean.TransactionDetail">
+    insert into transaction_detail (txid, address, type,
+      amount)
+    values (#{txid,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+      #{amount,jdbcType=DOUBLE})
+  </insert>
+
+</mapper>

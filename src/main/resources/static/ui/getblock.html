@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>Demo</title>
+</head>
+
+<body>
+    <div id="app">
+        blockhash:{{pageinfo.blockhash}}<br>
+        height: {{pageinfo.height}}<br>
+        time: {{pageinfo.time}}<br>
+        txSize: {{pageinfo.txSize}}<br>
+        sizeOnDisk: {{pageinfo.sizeOnDisk}}<br>
+        difficulty: {{pageinfo.difficulty}}<br>
+        prevBlockhash: {{pageinfo.prevBlockhash}}<br>
+        nextBlockhash: {{pageinfo.nextBlockhash}}<br>
+        outputTotal: {{pageinfo.outputTotal}}<br>
+        transactionFees: {{pageinfo.transactionFees}}<br>
+        merkleRoot: {{pageinfo.merkleRoot}}<br>
+        transactions: {{pageinfo.transactions}}
+    </div>
+
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/getblock.js"></script>
+
+</body>
+
+</html>
