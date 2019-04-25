@@ -11,22 +11,23 @@
 
 <body>
     <div id="app">
-        <template>
-            <el-table :data="showRecentBlocks" style="width: 100%">
-                <el-table-column label="高度">
-                    <template slot-scope="scope">
-                        <el-button @click="togetblock(scope.row)" type="text">{{scope.row.height}}</el-button>
-                        <!-- <a href="getblock.html?scope.row.height">{{scope.row.height}}</a> -->
-                    </template>
-                </el-table-column>
-                <el-table-column prop="time" label="时间" width="180">
-                </el-table-column>
-                <el-table-column prop="txSize" label="交易数">
-                </el-table-column>
-                <el-table-column prop="showSizeOnDisk" label="文件大小">
-                </el-table-column>
-            </el-table>
-        </template>
+        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-button type="primary" @click="sousuo">搜索</el-button>
+        <el-table :data="showRecentBlocks" style="width: 100%">
+            <el-table-column label="高度">
+                <template slot-scope="scope">
+                    <el-button @click="togetblock(scope.row)" type="text">{{scope.row.height}}</el-button>
+                    <!-- <a href="getblock.html?scope.row.height">{{scope.row.height}}</a> -->
+                </template>
+            </el-table-column>
+            <el-table-column prop="time" label="时间" width="180">
+            </el-table-column>
+            <el-table-column prop="txSize" label="交易数">
+            </el-table-column>
+            <el-table-column prop="showSizeOnDisk" label="文件大小">
+            </el-table-column>
+        </el-table>
+
     </div>
 
     <script src="assets/js/axios.min.js"></script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>Demo</title>
+</head>
+
+<body>
+    <div id="app">
+            txhash: {{pageinfo.txhash}}<br>
+            size: {{pageinfo.size}}<br>
+            weight: {{pageinfo.weight}}<br>
+            time: {{pageinfo.time}}<br>
+            totalInput: {{pageinfo.totalInput}}<br>
+            totalOutput: {{pageinfo.totalOutput}}<br>
+            fees: {{pageinfo.fees}}<br>
+            txDetails: {{pageinfo.txDetails}}
+    </div>
+
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/gettransaction.js"></script>
+
+</body>
+
+</html>
