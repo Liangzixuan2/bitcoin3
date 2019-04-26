@@ -2,18 +2,18 @@ var app = new Vue({
     el: '#app',
     data: {
         blockheight: '',
-        pageinfo: '',
-        blockhash: ''
+        pageinfo: [],
+        hash: '',
     },
     mounted() {
         var url = new URL(location.href);
         this.blockheight = url.searchParams.get("height");
-        this.blockhash = url.searchParams.get("blockhash");
+        this.hash = url.searchParams.get("blockhash");
         console.log(this.blockheight);
-        console.log(this.blockhash);
+        console.log(this.hash);
         if (this.blockheight != null) {
             this.getblockbyheight();
-        } else if (this.blockhash != null) {
+        } else if (this.hash != null) {
             this.getblockbyhash();
         }
 
@@ -36,7 +36,7 @@ var app = new Vue({
         getblockbyhash() {
             axios.get('http://localhost:8080/block/getBlockDetailByHash', {
                 params: {
-                    blockhash: this.blockhash
+                    hash: this.hash
                 }
             })
                 .then(function (response) {

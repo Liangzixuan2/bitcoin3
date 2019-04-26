@@ -5,14 +5,14 @@ var app = new Vue({
         input:''
     },
     computed:{
-        showRecentBlocks(){
-            var now = Date.now();
-            this.pageinfo.forEach(block => {
-                block.showtime = parseInt((now - block.time)/1000/60);
-                block.showSizeOnDisk = block.sizeOnDisk.toLocaleString('en');
-            });
-            return this.pageinfo;
-        }
+        // showRecentBlocks(){
+        //     var now = Date.now();
+        //     this.pageinfo.forEach(block => {
+        //         block.showtime = parseInt((now - block.time)/1000/60);
+        //         block.showSizeOnDisk = block.sizeOnDisk.toLocaleString('en');
+        //     });
+        //     return this.pageinfo;
+        // }
     },
     mounted() {
         this.getblocklist();
@@ -22,7 +22,7 @@ var app = new Vue({
             axios.get('http://localhost:8080/block/getRecentBlocks')
                 .then(function (response) {
                     
-                    app.pageinfo = response.data.list;
+                    app.pageinfo = response.data;
                     
                 })
                 .catch(function (error) {
@@ -41,6 +41,7 @@ var app = new Vue({
             } else if(this.input.length==64) {
                 location.href='gettransaction.html?txhash='+this.input;
             }else if(this.input.length<64) {
+                
                 location.href='gettransaction_detail.html?address='+this.input;
             }
         }
