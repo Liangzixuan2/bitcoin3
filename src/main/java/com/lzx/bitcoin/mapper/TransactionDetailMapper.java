@@ -2,6 +2,7 @@ package com.lzx.bitcoin.mapper;
 
 import com.lzx.bitcoin.bean.TransactionDetail;
 import com.lzx.bitcoin.dto.TransactionInBlockDTO;
+import com.lzx.bitcoin.dto.TxDetailInTxInfo;
 import feign.Param;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface TransactionDetailMapper {
 
     void truncate();
 
-    //List<TransactionInBlockDTO> selectbyadress(@Param("address") String address);
+    List<TransactionInBlockDTO> selectbyadress(@Param("address") String address);
+
+    List<TxDetailInTxInfo> get(Object txid);
 }

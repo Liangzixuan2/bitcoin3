@@ -69,8 +69,13 @@
       select * from block where height=#{blockheight}
   </select>
 
-  <select id="getRecentBlocks"  parameterType="java.lang.Integer" resultMap="BlockListDTO" >
-      select height,time,tx_size,size_on_disk from block
+
+  <select id="getRecentBlocks" resultMap="BlockListDTO" >
+      select * from block
   </select>
+
+  <update id="truncate">
+    truncate table block;
+  </update>
 
 </mapper>

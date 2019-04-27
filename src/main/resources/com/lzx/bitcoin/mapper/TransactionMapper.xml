@@ -70,5 +70,13 @@
       select * from transaction where txhash=#{txhash}
   </select>
 
+  <update id="truncate">
+    truncate table transaction;
+  </update>
+
+  <select id="getTransaction" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select * from transaction where txid=#{txid}
+  </select>
+
 
 </mapper>

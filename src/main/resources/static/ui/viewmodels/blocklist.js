@@ -5,14 +5,14 @@ var app = new Vue({
         input:''
     },
     computed:{
-        // showRecentBlocks(){
-        //     var now = Date.now();
-        //     this.pageinfo.forEach(block => {
-        //         block.showtime = parseInt((now - block.time)/1000/60);
-        //         block.showSizeOnDisk = block.sizeOnDisk.toLocaleString('en');
-        //     });
-        //     return this.pageinfo;
-        // }
+        showRecentBlocks(){
+            var now = Date.now();
+            this.pageinfo.forEach(block => {
+                block.showtime = parseInt((now - block.time)/1000/60);
+                block.showSizeOnDisk = block.sizeOnDisk.toLocaleString('en');
+            });
+            return this.pageinfo;
+        }
     },
     mounted() {
         this.getblocklist();
@@ -22,8 +22,8 @@ var app = new Vue({
             axios.get('http://localhost:8080/block/getRecentBlocks')
                 .then(function (response) {
                     
-                    app.pageinfo = response.data;
-                    
+                    app.pageinfo = response.data.list;
+                    console.log(app.pageinfo);
                 })
                 .catch(function (error) {
                     console.log(error);

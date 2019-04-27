@@ -1,6 +1,7 @@
 package com.lzx.bitcoin.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class TransactionInBlockDTO {
     private String txid;
@@ -10,6 +11,26 @@ public class TransactionInBlockDTO {
     private Long size;
 
     private Date time;
+    
+    private  Double zong;
+
+    private List<TxDetailInTxInfo> txDetailInTxInfos;
+
+    public Double getZong() {
+        return zong;
+    }
+
+    public void setZong(Double zong) {
+        this.zong = zong;
+    }
+
+    public List<TxDetailInTxInfo> getTxDetailInTxInfos() {
+        return txDetailInTxInfos;
+    }
+
+    public void setTxDetailInTxInfos(List<TxDetailInTxInfo> txDetailInTxInfos) {
+        this.txDetailInTxInfos = txDetailInTxInfos;
+    }
 
     public String getTxid() {
         return txid;

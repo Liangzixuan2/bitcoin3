@@ -9,11 +9,33 @@
     <result column="amount" jdbcType="DOUBLE" property="amount" />
   </resultMap>
 
+  <resultMap id="TxDetailInTxInfo" type="com.lzx.bitcoin.dto.TxDetailInTxInfo">
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+  </resultMap>
+
   <insert id="insert" parameterType="com.lzx.bitcoin.bean.TransactionDetail">
     insert into transaction_detail (txid, address, type,
       amount)
     values (#{txid,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
       #{amount,jdbcType=DOUBLE})
   </insert>
+
+  <select id="selectbyadress" resultMap="BaseResultMap">
+    select
+    *
+    from transaction_detail
+    where address = #{address}
+  </select>
+
+
+  <select id="get"  parameterType="java.lang.String" resultMap="TxDetailInTxInfo">
+    select * from transaction_detail where txid=#{txid}
+  </select>
+
+  <update id="truncate">
+    truncate table transaction_detail;
+  </update>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.lzx.bitcoin.dto;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 

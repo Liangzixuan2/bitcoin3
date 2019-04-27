@@ -12,27 +12,34 @@ import com.lzx.bitcoin.mapper.BlockMapper;
 import com.lzx.bitcoin.mapper.TransactionDetailMapper;
 import com.lzx.bitcoin.mapper.TransactionMapper;
 import com.lzx.bitcoin.service.MiscService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.logging.Logger;
+import java.util.List;
 
 @Service
 public class MiscServiceImpl implements MiscService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
-    private Bitcoin bitcoin;
-    @Autowired
-    private BlockMapper blockMapper;
-    @Autowired
-    private TransactionMapper transactionMapper;
-    @Autowired
-    private TransactionDetailMapper transactionDetailMapper;
+    private Bitcoin bitcoinApi;
+
     @Autowired
     private BitcoinJsonRpcClient bitcoinJsonRpcClient;
 
+    @Autowired
+    private BlockMapper blockMapper;
+
+    @Autowired
+    private TransactionMapper transactionMapper;
+
+    @Autowired
+    private TransactionDetailMapper transactionDetailMapper;
 
     @Async
     @Override
@@ -51,8 +58,8 @@ public class MiscServiceImpl implements MiscService {
 
         String temphash = blockHash;
 
-        while (temphash!=null && !temphash.isEmpty()){
-            JSONObject blockOrigin = bitcoin.getblockbyhash(temphash);
+        while (temphash != null && !temphash.isEmpty()){
+            JSONObject blockOrigin = bitcoinApi.getblockbyhash(temphash);
             Block block = new Block();
             block.setBlockhash(blockOrigin.getString("hash"));
             block.setBlockchainId(2);
@@ -71,13 +78,17 @@ public class MiscServiceImpl implements MiscService {
             block.setNextBlockhash(blockOrigin.getString("nextblockhash"));
             block.setMerkleRoot(blockOrigin.getString("merkleroot"));
             blockMapper.insert(block);
+
             temphash = blockOrigin.getString("nextblockhash");
         }
+
+        logger.info("sync finished");
+
     }
 
     public void importTx(JSONObject tx, String blockhash, Date time) throws Throwable {
         Transaction transaction = new Transaction();
-        String txid=tx.getString("txid");
+        String txid = tx.getString("txid");
         transaction.setTxid(txid);
         transaction.setTxhash(tx.getString("hash"));
         transaction.setBlockhash(blockhash);
@@ -98,11 +109,9 @@ public class MiscServiceImpl implements MiscService {
         for (int i = 1; i < vins.size(); i++) {
             importVinDetail(vins.getJSONObject(i),txid);
         }
-
-
     }
 
-    private void importVinDetail(JSONObject vout, String txid) {
+    public void importVoutDetail(JSONObject vout, String txid){
         TransactionDetail transactionDetail = new TransactionDetail();
         transactionDetail.setTxid(txid);
         JSONObject scriptPubKey = vout.getJSONObject("scriptPubKey");
@@ -117,33 +126,29 @@ public class MiscServiceImpl implements MiscService {
         transactionDetail.setType((byte) TransactionDetailType.Receive.ordinal());
 
         transactionDetailMapper.insert(transactionDetail);
+
     }
 
-
-    public void importVoutDetail(JSONObject vin, String txidOrigin) throws Throwable {
+    public void importVinDetail(JSONObject vin, String txidOrigin) throws Throwable {
         String txid = vin.getString("txid");
         Integer vout = vin.getInteger("vout");
 
         JSONObject rawTransaxtion = bitcoinJsonRpcClient.getRawTransaxtion(txid);
         JSONArray vouts = rawTransaxtion.getJSONArray("vout");
         JSONObject jsonObject = vouts.getJSONObject(vout);
-        TransactionDetail transactionDetail = new TransactionDetail();
-        transactionDetail.setTxid(txid);
-        JSONObject scriptPubKey = jsonObject.getJSONObject("scriptPubKey");
-        JSONArray addresses = scriptPubKey.getJSONArray("addresses");
-        if (addresses != null && !addresses.isEmpty()){
-            String address = addresses.getString(0);
 
-            transactionDetail.setAddress(address);
-        }
+        TransactionDetail transactionDetail = new TransactionDetail();
+        transactionDetail.setTxid(txidOrigin);
+        transactionDetail.setType((byte) TransactionDetailType.Send.ordinal());
         Double amount = jsonObject.getDouble("value");
         transactionDetail.setAmount(amount);
-        transactionDetail.setType((byte) TransactionDetailType.Receive.ordinal());
+        JSONObject scriptPubKey = jsonObject.getJSONObject("scriptPubKey");
+        JSONArray addresses = scriptPubKey.getJSONArray("addresses");
+        if (addresses != null){
+            String address = addresses.getString(0);
+            transactionDetail.setAddress(address);
+        }
 
         transactionDetailMapper.insert(transactionDetail);
     }
-
-
-
-
 }

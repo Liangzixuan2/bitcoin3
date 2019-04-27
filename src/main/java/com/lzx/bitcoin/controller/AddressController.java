@@ -25,7 +25,7 @@ public class AddressController {
     @GetMapping("/getAddressTransactions")
     public List<TransactionInBlockDTO> getAddressTransactions(@RequestParam String address,
                                                               @RequestParam(required = false, defaultValue = "1") Integer pageNum){
-        //List<TransactionInBlockDTO> list = transactionDetailMapper.selectbyadress(address);
+        List<TransactionInBlockDTO> list = transactionDetailMapper.selectbyadress(address);
         return null;
     }
 
