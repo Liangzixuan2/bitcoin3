@@ -31,4 +31,6 @@ public interface TransactionMapper {
     TransactionInfoDTO getTransactionInfoByTxhash(String txhash);
 
     Transaction getTransaction(String txid);
+
+
 }

@@ -45,4 +45,10 @@ public class BitcoinJsonRpcClient {
         String bestblockhash = jsonRpcHttpClient.invoke("getbestblockhash", new Object[]{}, String.class);
         return bestblockhash;
     }
+
+    //获取交易池的信息
+    public JSONArray getrawmempool() throws Throwable {
+        JSONArray getrawmempool = jsonRpcHttpClient.invoke("getrawmempool", new Object[]{false}, JSONArray.class);
+        return getrawmempool;
+    }
 }

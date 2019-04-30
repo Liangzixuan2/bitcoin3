@@ -1,5 +1,6 @@
 package com.lzx.bitcoin.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lzx.bitcoin.api.Bitcoin;
 import com.lzx.bitcoin.api.BitcoinJsonRpcClient;
@@ -53,6 +54,14 @@ public class Testcontroller {
         JSONObject transaction = bitcoin.getTransaction(txhash);
         return transaction;
     }
+
+    @GetMapping("getrawmempool")
+    public JSONArray getrawmempool() throws Throwable {
+        JSONArray transaction = bitcoinJsonRpcClient.getrawmempool();
+        return transaction;
+    }
+
+
 
 
 }

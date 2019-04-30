@@ -25,4 +25,6 @@ public interface TransactionDetailMapper {
     List<TransactionInBlockDTO> selectbyadress(@Param("address") String address);
 
     List<TxDetailInTxInfo> get(Object txid);
+
+    List<String> gettxid(String address);
 }

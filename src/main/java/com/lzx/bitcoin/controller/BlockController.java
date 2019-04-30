@@ -114,7 +114,7 @@ public class BlockController {
             List<TxDetailInTxInfo> txDetailInTxInfo = transactionDetailMapper.get((String)txid);
             transactionInBlockDTO.setTxDetailInTxInfos(txDetailInTxInfo);
             for (TxDetailInTxInfo detailInTxInfo : txDetailInTxInfo) {
-                if (detailInTxInfo.getType()==2){
+                if (detailInTxInfo.getType()==1){
                     outsum+=detailInTxInfo.getAmount();
                 }
             }
